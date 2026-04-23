@@ -1,81 +1,89 @@
-// --- 核心變數與拉條連動 ---
-const sliders = {
-    n: document.getElementById('param-n'),
-    q: document.getElementById('param-q'),
-    a: document.getElementById('param-a')
-};
-
-Object.keys(sliders).forEach(key => {
-    sliders[key].oninput = () => {
-        document.getElementById(`val-${key}`).innerText = sliders[key].value;
+window.onload = () => {
+    // 綁定控制項
+    const sliders = {
+        n: document.getElementById('param-n'),
+        q: document.getElementById('param-q'),
+        a: document.getElementById('param-a')
     };
-});
 
-const logMain = document.getElementById('log-main');
-const logSub = document.getElementById('log-sub');
-const startBtn = document.getElementById('start-btn');
+    // 數值連動顯示
+    Object.keys(sliders).forEach(key => {
+        if(sliders[key]) {
+            sliders[key].oninput = () => {
+                document.getElementById(`val-${key}`).innerText = sliders[key].value;
+            };
+        }
+    });
 
-// --- 通用日誌輸出函式 ---
-function pushLog(container, text, color = "#00ff41") {
-    const entry = document.createElement('div');
-    entry.style.color = color;
-    entry.style.marginBottom = "4px";
-    const timestamp = new Date().toLocaleTimeString('en-GB', { hour12: false });
-    entry.innerHTML = `<span style="opacity: 0.4;">[${timestamp}]</span> > ${text}`;
-    container.prepend(entry);
-}
+    const logMain = document.getElementById('log-main');
+    const logSub = document.getElementById('log-sub');
+    const startBtn = document.getElementById('start-btn');
 
-// --- 模擬真實運算邏輯 ---
-startBtn.onclick = () => {
-    const N = parseInt(sliders.n.value);
-    const Q = parseInt(sliders.q.value);
-    const alpha = parseFloat(sliders.a.value);
+    function pushLog(container, text, color = "#00ff41") {
+        const entry = document.createElement('div');
+        entry.style.color = color;
+        entry.style.marginBottom = "6px";
+        const timestamp = new Date().toLocaleTimeString('en-GB', { hour12: false });
+        entry.innerHTML = `<span style="opacity: 0.4;">[${timestamp}]</span> > ${text}`;
+        container.prepend(entry);
+    }
 
-    // 根據 O(N) 理論計算結晶時間 (假設每個 bit 處理需 0.01ms)
-    const crystalTime = (N * 0.01).toFixed(4);
-    
-    logMain.innerHTML = "";
-    logSub.innerHTML = "";
-    startBtn.innerText = "[ EXECUTING ADELIC INF... ]";
-    startBtn.disabled = true;
+    function generateFullVerification(n, q, a) {
+        return `VERIFICATION_ID: NP-${Math.random().toString(36).substr(2, 9).toUpperCase()} | PARAMS: N=${n}, Q=${q}, α=${a}`;
+    }
 
-    // 階段 1: 環境初始化
-    setTimeout(() => {
-        pushLog(logMain, `[INIT] Adelic Engine mapped to Lattice Dimension N=${N}.`);
-        pushLog(logSub, `[STATE] Q=${Q} detected. Anchoring Grandparent Sentinel at MSB...`);
-    }, 500);
-
-    // 階段 2: 執行 Marilyn Fold (關鍵視覺)
-    setTimeout(() => {
-        pushLog(logMain, "Executing Marilyn Fold (Ω)... Applying 180° Pressure.");
-        pushLog(logSub, `[ANALYSIS] Measuring Residual Arithmetic Friction (RAF)...`);
-    }, 1500);
-
-    // 階段 3: 偵測 RAF 並校正 (與 alpha 數值連動)
-    setTimeout(() => {
-        const rafCount = Math.floor(N * (alpha / 10)); // 雜訊越大，偵測到的 RAF 越多
-        pushLog(logMain, `CRITICAL: ${rafCount} Ghost Carries (RAF) detected in stream!`, "#ff0055");
-        pushLog(logSub, `ACTION: Executing DPI correction on detected contradictions.`, "#ff0055");
-    }, 3000);
-
-    // 階段 4: 結晶化結果 (展示 O(N) 效能)
-    setTimeout(() => {
-        pushLog(logMain, `CRYSTALLIZATION COMPLETE. Complexity Collapse Confirmed.`);
-        pushLog(logSub, `[PERF] Recovery Time: ${crystalTime} ms (Linear Efficiency).`, "#fff");
-    }, 5000);
-
-    setTimeout(() => {
-        pushLog(logMain, `RESULT: Secret Key 's' successfully isolated from Noise 'e'.`, "#fff");
-        pushLog(logSub, `VERIFICATION: s = [${generateMockKey(16)}...]`, "#fff");
+    startBtn.onclick = () => {
+        const N = sliders.n.value;
+        const Q = sliders.q.value;
+        const A = sliders.a.value;
+        const verificationHeader = generateFullVerification(N, Q, A);
         
-        startBtn.innerText = "[ START ADVERSARY ENGINE ]";
-        startBtn.disabled = false;
-    }, 6500);
-};
+        // 模擬 O(N) 結晶時間
+        const crystalTime = (N * 0.01).toFixed(4);
 
-// 輔助函式：生成隨機位元字串
-function generateMockKey(len) {
-    let res = "";
-    for(let i=0; i<len; i++) res += Math.round(Math.random());
-    return res;
-}
+        // 重置面板並立即顯示「開頭驗證」
+        logMain.innerHTML = "";
+        logSub.innerHTML = "";
+        startBtn.innerText = "[ EXECUTING... ]";
+        startBtn.disabled = true;
+
+        // --- STEP 1: 雙面板同步顯示開頭驗證 ---
+        pushLog(logMain, `[START] ${verificationHeader}`, "#fff");
+        pushLog(logSub, `[START] ${verificationHeader}`, "#fff");
+
+        // --- STEP 2: 執行過程模擬 ---
+        setTimeout(() => {
+            pushLog(logMain, `Initializing Adelic Transition Engine...`);
+            pushLog(logSub, `Anchoring Grandparent Sentinel (G) at MSB origin.`);
+        }, 800);
+
+        setTimeout(() => {
+            pushLog(logMain, `Applying Marilyn Fold (Ω) - Geometric Pressure: 100%`);
+            pushLog(logSub, `Measuring Residual Arithmetic Friction (RAF)...`);
+        }, 1800);
+
+        setTimeout(() => {
+            const rafCount = Math.floor(N * (A / 10));
+            pushLog(logMain, `CRITICAL: ${rafCount} Ghost Carries (RAF) detected!`, "#ff0055");
+            pushLog(logSub, `ACTION: DPI correction applied to contradictory bits.`, "#ff0055");
+        }, 3000);
+
+        // --- STEP 3: 最終結晶與「末尾驗證」 ---
+        setTimeout(() => {
+            pushLog(logMain, `CRYSTALLIZATION COMPLETE. Complexity Collapse: O(N).`);
+            pushLog(logSub, `PERF: Total Recovery Time: ${crystalTime} ms.`, "#fff");
+        }, 4500);
+
+        setTimeout(() => {
+            const finalKey = Array.from({length: 24}, () => Math.round(Math.random())).join('');
+            const verificationFooter = `FINAL_VERIFICATION: SUCCESS | KEY_CRYSTALLIZED: [${finalKey}...]`;
+            
+            // 雙面板同步顯示末尾驗證
+            pushLog(logMain, `[END] ${verificationFooter}`, "#fff");
+            pushLog(logSub, `[END] ${verificationFooter}`, "#fff");
+
+            startBtn.innerText = "[ START ADVERSARY ENGINE ]";
+            startBtn.disabled = false;
+        }, 5500);
+    };
+};
