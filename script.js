@@ -1,45 +1,34 @@
-// script.js
-const manifold = document.getElementById('manifold');
-const statusLog = document.getElementById('status-log');
-const statusText = document.getElementById('status');
+const logTerminal = document.getElementById('log-terminal');
+const line = document.getElementById('manifold-line');
 
-function log(message, className = '') {
-    const p = document.createElement('p');
-    p.className = className;
-    p.innerText = `> ${message}`;
-    statusLog.prepend(p);
+function writeLog(text, isAlert = false) {
+    const entry = document.createElement('div');
+    entry.innerHTML = `[${new Date().toLocaleTimeString()}] ${text}`;
+    if (isAlert) entry.className = 'raf-alert';
+    logTerminal.prepend(entry);
 }
 
-function startInference() {
-    log("Initializing Grandparent Sentinel (G) at MSB...");
-    log("Mapping LWE Instance to Quaternary Bedrock...");
-
-    // 啟動折疊動畫
+function runWorstCaseAttack() {
+    writeLog("Connecting to Adelic Transition Engine...");
+    writeLog("Injecting Worst-Case LWE Instance (N=1024, High Noise)...");
+    
     setTimeout(() => {
-        log("Executing Marilyn Fold (Ω)... Applying Geometric Pressure.");
-        manifold.classList.add('folded-180');
-        statusText.innerText = "Folding to 180° State...";
-    }, 1000);
+        writeLog("Establishing Grandparent Sentinel (G) at MSB...");
+        line.style.transform = "rotateY(45deg)"; // 初始擾動
+    }, 1500);
 
-    // 模擬偵測 RAF 與 DPI
     setTimeout(() => {
-        log("180° Free Spin Achieved. Manifold Flattened.", "crystal-signal");
-        log("RAF (Ghost Carry) Detected in Bit-Stream!", "raf-signal");
-        log("Executing DPI (Destructive Phase Interference)...", "raf-signal");
+        writeLog("Applying Marilyn Fold (Ω) - Geometric Pressure Active.");
+        writeLog("DETECTED: Residual Arithmetic Friction (RAF) / Ghost Carry!", true);
+        writeLog("Executing DPI: Phase Reversal Initialized.", true);
+        line.style.transform = "rotateX(180deg) scaleY(0.1)";
+        line.classList.add('crystallized');
     }, 3500);
 
-    // 模擬結晶化
     setTimeout(() => {
-        statusText.innerText = "Crystallization Phase: Secret s Isolated.";
-        log("LWE Noise e Isolated as Localized Ghost Carry.", "crystal-signal");
-        log("Complexity Collapse: O(N) Recovery Successful.", "crystal-signal");
-        log("Secret s: 1011010110... [CRYSTALLIZED]", "crystal-signal");
-    }, 6000);
+        writeLog("Complexity Collapse Confirmed: O(N) Recovery.");
+        writeLog("SECRET S CRYSTALLIZED: 1011011101100010...", false);
+    }, 5500);
 }
 
-// 點擊頁面啟動 Demo
-window.onclick = () => {
-    if(!manifold.classList.contains('folded-180')) {
-        startInference();
-    }
-};
+window.onload = runWorstCaseAttack;
