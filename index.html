@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project NP | Adelic Adversary Dashboard</title>
+    <title>Adelic Adversary Dashboard | Project NP</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
@@ -11,7 +11,7 @@
     <div class="scanline"></div>
     <header>
         <h1 class="glitch">> WORST-CASE LWE ADVERSARY</h1>
-        <p class="sub-header">APWPG-WHT MSB Peeling Oracle — Live In-Browser Engine</p>
+        <p class="sub-header">APWPG-WHT MSB Peeling Oracle — Adelic Transition Engine</p>
     </header>
 
     <div class="dashboard">
@@ -21,19 +21,19 @@
             <div class="control-group">
                 <label>N — Lattice Dimension: <span id="val-n">128</span></label>
                 <input type="range" id="param-n" min="64" max="1024" step="64" value="128">
-                <span class="desc">Power-of-2 block size for FWHT</span>
+                <span class="desc">FWHT 塊大小 (Power-of-2)</span>
             </div>
 
             <div class="control-group">
                 <label>Q — LWE Modulus: <span id="val-q">3329</span></label>
                 <input type="range" id="param-q" min="1024" max="8192" step="1" value="3329">
-                <span class="desc">Ciphertext space Z_q</span>
+                <span class="desc">密文空間 Z_q</span>
             </div>
 
             <div class="control-group">
                 <label>α — Gaussian Noise σ: <span id="val-a">3.2</span></label>
                 <input type="range" id="param-a" min="0.1" max="10" step="0.1" value="3.2">
-                <span class="desc">Discrete Gaussian std dev</span>
+                <span class="desc">離散高斯標準差 (Noise Level)</span>
             </div>
 
             <button id="start-btn">[ START ADVERSARY ENGINE ]</button>
@@ -46,7 +46,7 @@
 
         <section class="panel results">
             <div class="log-sub-panel">
-                <h2 class="panel-title">APWPG ENGINE OUTPUT — STANDBY</h2>
+                <h2 class="panel-title">ENGINE OUTPUT — STANDBY</h2>
                 <div class="log-content" id="log-main">Awaiting command...</div>
             </div>
             
