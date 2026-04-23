@@ -1,45 +1,54 @@
-const logTerminal = document.getElementById('log-terminal');
-const manifold = document.getElementById('manifold-line');
+// 初始化拉條更新
+const nSlider = document.getElementById('param-n');
+const qSlider = document.getElementById('param-q');
+const aSlider = document.getElementById('param-a');
 
-const logs = [
-    { time: 500, msg: "SYSTEM_READY: Initializing Adelic Transition Engine..." },
-    { time: 1500, msg: "INPUT_STREAM: Injecting Worst-Case LWE Instance (N=1024)..." },
-    { time: 2500, msg: "ANCHOR: Establishing Grandparent Sentinel (G) at MSB origin." },
-    { time: 3500, msg: "FOLD_OP: Applying Marilyn Fold (Ω) - Incremental pressure..." },
-    { time: 4500, msg: "CRITICAL: Residual Arithmetic Friction (RAF) detected!", type: "alert" },
-    { time: 5000, msg: "ACTION: Executing DPI (Destructive Phase Interference)...", type: "alert" },
-    { time: 6500, msg: "STATE: Manifold flattened to 180° state. Symmetry achieved.", type: "fold" },
-    { time: 7500, msg: "CRYSTALLIZATION: Secret Key 's' isolated at Ground State.", type: "success" },
-    { time: 8000, msg: "RESULT: s = 1011011101... (Verification: 100.00%)", type: "success" }
-];
+nSlider.oninput = () => document.getElementById('val-n').innerText = nSlider.value;
+qSlider.oninput = () => document.getElementById('val-q').innerText = qSlider.value;
+aSlider.oninput = () => document.getElementById('val-a').innerText = aSlider.value;
 
-function writeLog(text, type) {
-    const entry = document.createElement('div');
-    entry.className = 'log-entry';
-    if (type === 'alert') entry.classList.add('raf-alert');
-    if (type === 'success') entry.classList.add('success');
-    
-    const timestamp = new Date().toLocaleTimeString('en-GB', { hour12: false });
-    entry.innerHTML = `<span style="color:#444">[${timestamp}]</span> ${text}`;
-    
-    logTerminal.prepend(entry);
+const logMain = document.getElementById('log-main');
+const logSub = document.getElementById('log-sub');
+const startBtn = document.getElementById('start-btn');
+
+function pushLog(target, text, color = "#00ff41") {
+    const div = document.createElement('div');
+    div.style.color = color;
+    div.innerText = `> ${text}`;
+    target.prepend(div);
 }
 
-function runSimulation() {
-    logs.forEach(item => {
-        setTimeout(() => {
-            writeLog(item.msg, item.type);
-            
-            // Visual triggers
-            if (item.type === 'fold') {
-                manifold.classList.add('crystallized');
-            }
-            if (item.msg.includes("Ω")) {
-                manifold.style.transform = "rotateY(45deg) scaleX(1.1)";
-            }
-        }, item.time);
-    });
-}
+startBtn.onclick = () => {
+    logMain.innerHTML = "";
+    logSub.innerHTML = "Initializing Adelic State Analysis...";
+    startBtn.innerText = "[ PROCESSING... ]";
+    startBtn.disabled = true;
 
-// Auto-start simulation on load
-window.onload = runSimulation;
+    // 模擬 Adelic 攻擊流程
+    setTimeout(() => {
+        pushLog(logMain, "System_Boot: Adelic Transition Engine Online.");
+        pushLog(logMain, `Parameters: N=${nSlider.value}, Q=${qSlider.value}, α=${aSlider.value}`);
+    }, 500);
+
+    setTimeout(() => {
+        pushLog(logMain, "Executing FWHT on Spectral Domain...");
+        pushLog(logSub, "Status: Mapping to Quaternary Bedrock.");
+    }, 1500);
+
+    setTimeout(() => {
+        pushLog(logMain, "CRITICAL: Residual Arithmetic Friction (RAF) Detected!", "#ff0055");
+        pushLog(logSub, "Action: Applying Destructive Phase Interference (DPI)", "#ff0055");
+    }, 3000);
+
+    setTimeout(() => {
+        pushLog(logMain, "Marilyn Fold: 180° State Symmetry Confirmed.");
+        pushLog(logSub, "Result: Ground State H stabilized. Bit-peeling successful.");
+    }, 4500);
+
+    setTimeout(() => {
+        pushLog(logMain, "CRYSTALLIZATION COMPLETE. Secret key s recovered.", "#fff");
+        pushLog(logSub, "Final Output: s = [1011011101...]", "#fff");
+        startBtn.innerText = "[ START ADVERSARY ENGINE ]";
+        startBtn.disabled = false;
+    }, 6000);
+};
