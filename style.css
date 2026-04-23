@@ -1,100 +1,74 @@
 :root {
-    --neon-cyan: #00ffcc;
-    --alert-red: #ff0055;
+    --glow-green: #00ff41;
+    --dim-green: #003b00;
     --bg-black: #050505;
-    --panel-gray: #111;
 }
 
 body {
     background-color: var(--bg-black);
-    color: var(--neon-cyan);
-    font-family: 'IBM Plex Mono', monospace;
+    color: var(--glow-green);
+    font-family: 'Share Tech Mono', monospace;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 20px;
     overflow: hidden;
 }
 
-header {
-    margin-top: 20px;
-    text-align: center;
+header { text-align: center; margin-bottom: 30px; }
+h1 { font-size: 2rem; letter-spacing: 5px; }
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-h1 {
-    font-weight: 300;
-    letter-spacing: 4px;
-    margin: 0;
-    font-size: 1.5rem;
+.panel {
+    border: 1px solid var(--dim-green);
+    background: rgba(0, 20, 0, 0.8);
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
 }
 
-.sub-header {
-    font-size: 0.7rem;
-    opacity: 0.6;
-    margin-top: 5px;
+.panel-title {
+    font-size: 14px;
+    border-bottom: 1px solid var(--dim-green);
+    padding-bottom: 5px;
+    margin-top: 0;
 }
 
-#visualizer-container {
-    width: 90vw;
-    height: 35vh;
-    background: #000;
-    border: 1px solid #222;
-    margin-top: 30px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    perspective: 1000px;
+/* 控制組與拉條樣式 */
+.control-group { margin-bottom: 25px; }
+input[type=range] {
+    width: 100%;
+    accent-color: var(--glow-green);
+    background: var(--dim-green);
 }
 
-#manifold-line {
-    width: 80%;
-    height: 2px;
-    background: var(--neon-cyan);
-    box-shadow: 0 0 15px var(--neon-cyan);
-    transition: all 2s cubic-bezier(0.19, 1, 0.22, 1);
-    transform: rotateY(0deg);
-}
-
-/* 180-Degree Fold State */
-#manifold-line.crystallized {
-    transform: rotateX(180deg) scaleY(0.5);
-    background: #fff;
-    box-shadow: 0 0 40px #fff;
-    height: 1px;
-}
-
-#terminal-header {
-    width: 90vw;
-    background: var(--panel-gray);
-    color: #555;
-    font-size: 10px;
-    padding: 5px 10px;
-    box-sizing: border-box;
-    border: 1px solid #222;
-    border-bottom: none;
-    margin-top: 20px;
-}
-
-#log-terminal {
-    width: 90vw;
-    height: 35vh;
-    background: #000;
-    border: 1px solid #222;
+button {
+    width: 100%;
     padding: 15px;
-    box-sizing: border-box;
+    background: transparent;
+    border: 1px solid var(--glow-green);
+    color: var(--glow-green);
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+button:hover { background: var(--glow-green); color: black; box-shadow: 0 0 20px var(--glow-green); }
+
+/* Log 面板 */
+.log-sub-panel {
+    height: 180px;
+    margin-bottom: 15px;
+    border: 1px solid #111;
+    background: black;
+}
+.log-content {
+    padding: 10px;
     font-size: 12px;
+    height: 140px;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column-reverse;
+    line-height: 1.5;
 }
-
-.log-entry { margin-bottom: 5px; line-height: 1.4; }
-.raf-alert { color: var(--alert-red); text-shadow: 0 0 5px var(--alert-red); }
-.success { color: #fff; font-weight: 600; }
-
-.cursor {
-    animation: blink 1s infinite;
-}
-
-@keyframes blink { 50% { opacity: 0; } }
