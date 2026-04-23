@@ -1,54 +1,61 @@
-// 初始化拉條更新
-const nSlider = document.getElementById('param-n');
-const qSlider = document.getElementById('param-q');
-const aSlider = document.getElementById('param-a');
+// 綁定拉條與數值顯示
+const sliders = {
+    n: document.getElementById('param-n'),
+    q: document.getElementById('param-q'),
+    a: document.getElementById('param-a')
+};
 
-nSlider.oninput = () => document.getElementById('val-n').innerText = nSlider.value;
-qSlider.oninput = () => document.getElementById('val-q').innerText = qSlider.value;
-aSlider.oninput = () => document.getElementById('val-a').innerText = aSlider.value;
+Object.keys(sliders).forEach(key => {
+    sliders[key].oninput = () => {
+        document.getElementById(`val-${key}`).innerText = sliders[key].value;
+    };
+});
 
 const logMain = document.getElementById('log-main');
 const logSub = document.getElementById('log-sub');
 const startBtn = document.getElementById('start-btn');
 
-function pushLog(target, text, color = "#00ff41") {
-    const div = document.createElement('div');
-    div.style.color = color;
-    div.innerText = `> ${text}`;
-    target.prepend(div);
+function pushLog(container, text, color = "#00ff41") {
+    const entry = document.createElement('div');
+    entry.style.color = color;
+    entry.style.marginBottom = "4px";
+    entry.innerHTML = `<span style="opacity: 0.5;">[${new Date().toLocaleTimeString('en-GB')}]</span> > ${text}`;
+    container.prepend(entry);
 }
 
 startBtn.onclick = () => {
+    // 重置日誌並鎖定按鈕
     logMain.innerHTML = "";
-    logSub.innerHTML = "Initializing Adelic State Analysis...";
+    logSub.innerHTML = "";
     startBtn.innerText = "[ PROCESSING... ]";
     startBtn.disabled = true;
 
-    // 模擬 Adelic 攻擊流程
+    // 模擬 Adelic 攻擊序列
     setTimeout(() => {
-        pushLog(logMain, "System_Boot: Adelic Transition Engine Online.");
-        pushLog(logMain, `Parameters: N=${nSlider.value}, Q=${qSlider.value}, α=${aSlider.value}`);
-    }, 500);
+        pushLog(logMain, "Initializing Engine... Mapping LWE to Quaternary Bedrock.");
+        pushLog(logMain, `Target: N=${sliders.n.value}, Q=${sliders.q.value}, Noise=${sliders.a.value}`);
+    }, 600);
 
     setTimeout(() => {
-        pushLog(logMain, "Executing FWHT on Spectral Domain...");
-        pushLog(logSub, "Status: Mapping to Quaternary Bedrock.");
-    }, 1500);
+        pushLog(logMain, "Executing Marilyn Fold (Ω)... Applying pressure.");
+        pushLog(logSub, "State: Manifold Folding to 180° Transition.");
+    }, 1800);
 
     setTimeout(() => {
         pushLog(logMain, "CRITICAL: Residual Arithmetic Friction (RAF) Detected!", "#ff0055");
-        pushLog(logSub, "Action: Applying Destructive Phase Interference (DPI)", "#ff0055");
-    }, 3000);
+        pushLog(logSub, "Action: Applying Destructive Phase Interference (DPI).", "#ff0055");
+    }, 3200);
 
     setTimeout(() => {
-        pushLog(logMain, "Marilyn Fold: 180° State Symmetry Confirmed.");
-        pushLog(logSub, "Result: Ground State H stabilized. Bit-peeling successful.");
-    }, 4500);
+        pushLog(logMain, "Success: 180° Symmetry Achieved. Ghost Carry Neutralized.");
+        pushLog(logSub, "Analysis: Bit-peeling stabilization complete.");
+    }, 4800);
 
     setTimeout(() => {
-        pushLog(logMain, "CRYSTALLIZATION COMPLETE. Secret key s recovered.", "#fff");
-        pushLog(logSub, "Final Output: s = [1011011101...]", "#fff");
+        pushLog(logMain, "CRYSTALLIZATION COMPLETE. Secret key 's' recovered.", "#fff");
+        pushLog(logSub, "Final State: Ground State H isolated.", "#fff");
+        
         startBtn.innerText = "[ START ADVERSARY ENGINE ]";
         startBtn.disabled = false;
-    }, 6000);
+    }, 6500);
 };
