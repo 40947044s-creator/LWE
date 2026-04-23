@@ -1,27 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Project NP: Adelic Transition Engine</title>
-    <style>
-        /* 模擬 180 度折疊動畫 */
-        .fold-container {
-            perspective: 1000px;
-        }
-        .manifold {
-            width: 300px;
-            height: 200px;
-            background: rgba(0, 150, 255, 0.5);
-            transition: transform 2s;
-            transform: rotateX(180deg); /* 180度折疊狀態 */
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adelic Inference | Project NP</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Adelic Inference Visualizer</h1>
-    <div class="fold-container">
-        <div id="manifold" class="manifold"></div>
-    </div>
-    <p>Status: <span id="status">Crystallizing Secret s...</span></p>
-    <canvas id="raf-monitor"></canvas>
+    <header>
+        <h1>ADELIC INFERENCE VISUALIZER</h1>
+        <div class="sub-header">Worst-Case LWE Complexity Collapse [O(N)]</div>
+    </header>
+
+    <main>
+        <div id="visualizer-container">
+            <div id="manifold-line"></div>
+            <div id="glow-overlay"></div>
+        </div>
+
+        <div id="terminal-header">DIAGNOSTIC_LOG_v4.04</div>
+        <div id="log-terminal">
+            <div class="cursor">_</div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
